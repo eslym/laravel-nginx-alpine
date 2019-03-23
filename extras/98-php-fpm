@@ -1,0 +1,27 @@
+#!/bin/sh
+
+if [ -z "$FPM_MAX_CHILDREN" ]; then
+    FPM_MAX_CHILDREN=5
+fi
+echo "Set FPM max children to $FPM_MAX_CHILDREN"
+sed -i "s/pm\.max_children = .*/pm.max_children = $FPM_MAX_CHILDREN/" /etc/php7/php-fpm.conf
+
+if [ -z "$FPM_START_SERVERS" ]; then
+    FPM_START_SERVERS=2
+fi
+echo "Set FPM start servers to $FPM_START_SERVERS"
+sed -i "s/pm\.start_servers = .*/pm.start_servers = $FPM_START_SERVERS/" /etc/php7/php-fpm.conf
+
+if [ -z "$FPM_MIN_SPARE_SERVERS" ]; then
+    FPM_MIN_SPARE_SERVERS=1
+fi
+echo "Set FPM min spare servers to $FPM_MIN_SPARE_SERVERS"
+sed -i "s/pm\.min_spare_servers = .*/pm.min_spare_servers = $FPM_MIN_SPARE_SERVERS/" /etc/php7/php-fpm.conf
+
+if [ -z "$FPM_MAX_SPARE_SERVERS" ]; then
+    FPM_MAX_SPARE_SERVERS=3
+fi
+echo "Set FPM max spare servers to $FPM_MAX_SPARE_SERVERS"
+sed -i "s/pm\.max_spare_servers = .*/pm.max_spare_servers = $FPM_MAX_SPARE_SERVERS/" /etc/php7/php-fpm.conf
+
+php-fpm7
